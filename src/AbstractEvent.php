@@ -50,16 +50,16 @@ abstract class AbstractEvent implements Event
     /**
      * Instantiate new event.
      *
-     * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $payload
      * @param TimeProvider         $timeProvider
      *
      * @return mixed|self
      */
-    final protected static function occurred(array $parameters, ?TimeProvider $timeProvider = null)
+    final protected static function occurred(array $payload, ?TimeProvider $timeProvider = null)
     {
         $timeProvider = $timeProvider ?? new SystemTimeProvider();
 
-        return new static($parameters, $timeProvider->getCurrentTime());
+        return new static($payload, $timeProvider->getCurrentTime());
     }
 
     /**
