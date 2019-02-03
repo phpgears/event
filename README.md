@@ -115,6 +115,13 @@ Have a look at [phpgears/dto](https://github.com/phpgears/dto) fo a better under
 
 Only `Gears\Event\EventBus` interface is provided, you can easily use any of the good bus libraries available out there by simply adding an adapter layer
 
+#### Implementations
+
+Event bus implementations currently available
+
+* [phpgears/event-symfony-messenger](https://github.com/phpgears/event-symfony-messenger) uses Symfony's Messenger
+* [phpgears/event-symfony-event-dispatcher](https://github.com/phpgears/event-symfony-event-dispatcher) uses Symfony's Event Dispatcher
+
 ## Contributing
 
 Found a bug or have a feature request? [Please open a new issue](https://github.com/phpgears/event/issues). Have a look at existing issues before.
