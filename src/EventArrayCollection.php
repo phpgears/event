@@ -46,28 +46,20 @@ final class EventArrayCollection implements EventCollection
 
     /**
      * {@inheritdoc}
-     */
-    public function rewind(): void
-    {
-        \reset($this->events);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function valid(): bool
-    {
-        return \key($this->events) !== null;
-    }
-
-    /**
-     * {@inheritdoc}
      *
      * @return Event
      */
     public function current(): Event
     {
         return \current($this->events);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(): void
+    {
+        \next($this->events);
     }
 
     /**
@@ -83,8 +75,16 @@ final class EventArrayCollection implements EventCollection
     /**
      * {@inheritdoc}
      */
-    public function next(): void
+    public function valid(): bool
     {
-        \next($this->events);
+        return \key($this->events) !== null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rewind(): void
+    {
+        \reset($this->events);
     }
 }
