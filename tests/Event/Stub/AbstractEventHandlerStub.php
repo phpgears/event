@@ -24,9 +24,9 @@ class AbstractEventHandlerStub extends AbstractEventHandler
     /**
      * {@inheritdoc}
      */
-    protected function getSupportedEventType(): string
+    protected function getSupportedEventTypes(): array
     {
-        return AbstractEventStub::class;
+        return [AbstractEventStub::class];
     }
 
     /**

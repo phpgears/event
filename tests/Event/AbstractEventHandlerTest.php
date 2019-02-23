@@ -25,7 +25,7 @@ class AbstractEventHandlerTest extends TestCase
 {
     /**
      * @expectedException \Gears\Event\Exception\InvalidEventException
-     * @expectedExceptionMessageRegExp /Event must implement .+\\AbstractEventStub interface, .+ given/
+     * @expectedExceptionMessageRegExp /Event must be a .+\\AbstractEventStub, .+ given/
      */
     public function testInvalidEventType(): void
     {
