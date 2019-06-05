@@ -16,7 +16,7 @@ namespace Gears\Event;
 /**
  * Event collection.
  */
-interface EventCollection extends \Iterator
+interface EventCollection extends \Iterator, \Countable
 {
     /**
      * {@inheritdoc}

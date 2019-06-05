@@ -40,6 +40,8 @@ class EventArrayCollectionTest extends TestCase
         ];
         $collection = new EventArrayCollection($events);
 
+        $this->assertCount(2, $collection);
+
         foreach ($collection as $event) {
             $this->assertInstanceOf(Event::class, $event);
         }

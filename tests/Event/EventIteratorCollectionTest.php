@@ -40,6 +40,11 @@ class EventIteratorCollectionTest extends TestCase
         ];
         $collection = new EventIteratorCollection(new \ArrayIterator($events));
 
+        $collection->next();
+        $currentKey = $collection->key();
+        $this->assertCount(2, $collection);
+        $this->assertEquals($currentKey, $collection->key());
+
         foreach ($collection as $event) {
             $this->assertInstanceOf(Event::class, $event);
         }
