@@ -13,38 +13,30 @@ declare(strict_types=1);
 
 namespace Gears\Event;
 
-use Gears\DTO\ScalarPayloadBehaviour;
 use Gears\Event\Time\SystemTimeProvider;
 use Gears\Event\Time\TimeProvider;
-use Gears\Immutability\ImmutabilityBehaviour;
 
 /**
  * Abstract immutable event.
  */
 abstract class AbstractEvent implements Event
 {
-    use ImmutabilityBehaviour, ScalarPayloadBehaviour {
-        ScalarPayloadBehaviour::__call insteadof ImmutabilityBehaviour;
-    }
-
-    /**
-     * @var \DateTimeImmutable
-     */
-    private $createdAt;
+    use EventBehaviour;
 
     /**
      * AbstractEvent constructor.
      *
      * @param array<string, mixed> $payload
+     * @param array<string, mixed> $metadata
      * @param \DateTimeImmutable   $createdAt
      */
-    private function __construct(array $payload, \DateTimeImmutable $createdAt)
+    private function __construct(array $payload, array $metadata, \DateTimeImmutable $createdAt)
     {
         $this->checkImmutability();
 
-        $this->createdAt = $createdAt->setTimezone(new \DateTimeZone('UTC'));
-
         $this->setPayload($payload);
+        $this->setMetadata($metadata);
+        $this->createdAt = $createdAt->setTimezone(new \DateTimeZone('UTC'));
     }
 
     /**
@@ -59,15 +51,7 @@ abstract class AbstractEvent implements Event
     {
         $timeProvider = $timeProvider ?? new SystemTimeProvider();
 
-        return new static($payload, $timeProvider->getCurrentTime());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    final public function getCreatedAt(): \DateTimeImmutable
-    {
-        return $this->createdAt;
+        return new static($payload, [], $timeProvider->getCurrentTime());
     }
 
     /**
@@ -77,7 +61,7 @@ abstract class AbstractEvent implements Event
      */
     public static function reconstitute(array $payload, array $attributes)
     {
-        return new static($payload, $attributes['createdAt']);
+        return new static($payload, $attributes['metadata'], $attributes['createdAt']);
     }
 
     /**

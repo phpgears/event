@@ -36,7 +36,7 @@ require './vendor/autoload.php';
 
 Events are DTOs that carry all the information for an action to happen
 
-You can create your own by implementing `Gears\Event\Event` or extend from `Gears\Event\AbstractEvent` which ensures event immutability and payload is composed only of **scalar values** which is a very interesting capability. AbstractEvent has a private constructor forcing you to create events using the occurred static method
+You can create your own by implementing `Gears\Event\Event` or extending from `Gears\Event\AbstractEvent` which ensures event immutability and payload and metadata is composed only of **scalar values** which is a very interesting capability. AbstractEvent has a private constructor forcing you to create events using the _occurred_ static method
 
 ```php
 use Gears\Event\AbstractEvent;

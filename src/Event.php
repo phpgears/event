@@ -44,6 +44,22 @@ interface Event
     public function getPayload(): array;
 
     /**
+     * Get event metadata.
+     *
+     * @return array<string, mixed>
+     */
+    public function getMetadata(): array;
+
+    /**
+     * Get event with new metadata.
+     *
+     * @param array<string, mixed> $metadata
+     *
+     * @return mixed|self
+     */
+    public function withMetadata(array $metadata);
+
+    /**
      * Get event creation time.
      *
      * @return \DateTimeImmutable

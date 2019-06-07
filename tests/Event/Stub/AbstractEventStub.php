@@ -23,10 +23,12 @@ class AbstractEventStub extends AbstractEvent
     /**
      * Instantiate event.
      *
+     * @param mixed[] $payload
+     *
      * @return self
      */
-    public static function instance(): self
+    public static function instance(array $payload): self
     {
-        return self::occurred([]);
+        return self::occurred($payload);
     }
 }

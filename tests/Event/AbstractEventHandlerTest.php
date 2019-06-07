@@ -36,23 +36,8 @@ class AbstractEventHandlerTest extends TestCase
     public function testHandling(): void
     {
         $handler = new AbstractEventHandlerStub();
-        $handler->handle(AbstractEventStub::instance());
+        $handler->handle(AbstractEventStub::instance([]));
 
         $this->assertTrue(true);
-    }
-
-    public function testReconstitute(): void
-    {
-        $createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
-
-        $event = AbstractEventStub::reconstitute(['parameter' => 'one'], ['createdAt' => $createdAt]);
-
-        $this->assertTrue($event->has('parameter'));
-        $this->assertEquals($createdAt, $event->getCreatedAt());
-
-        $emptyCommand = AbstractEmptyEventStub::reconstitute(['parameter' => 'one'], ['createdAt' => $createdAt]);
-
-        $this->assertFalse($emptyCommand->has('parameter'));
-        $this->assertEquals($createdAt, $emptyCommand->getCreatedAt());
     }
 }
