@@ -43,7 +43,7 @@ final class EventIteratorCollection implements EventCollection
 
         if (!$event instanceof Event) {
             throw new InvalidEventException(\sprintf(
-                'Event collection only accepts %s, %s given',
+                'Event collection only accepts "%s", "%s" given',
                 Event::class,
                 \is_object($event) ? \get_class($event) : \gettype($event)
             ));

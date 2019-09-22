@@ -31,7 +31,7 @@ abstract class AbstractEmptyEvent implements Event
      */
     private function __construct(array $metadata, \DateTimeImmutable $createdAt)
     {
-        $this->checkImmutability();
+        $this->assertImmutable();
 
         $this->setMetadata($metadata);
         $this->createdAt = $createdAt->setTimezone(new \DateTimeZone('UTC'));

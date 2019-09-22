@@ -27,6 +27,6 @@ class AbstractEmptyEventStub extends AbstractEmptyEvent
      */
     public static function instance(): self
     {
-        return self::occurred();
+        return static::occurred();
     }
 }

@@ -32,7 +32,7 @@ abstract class AbstractEvent implements Event
      */
     private function __construct(array $payload, array $metadata, \DateTimeImmutable $createdAt)
     {
-        $this->checkImmutability();
+        $this->assertImmutable();
 
         $this->setPayload($payload);
         $this->setMetadata($metadata);

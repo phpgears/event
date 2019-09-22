@@ -25,7 +25,7 @@ class AbstractEmptyEventTest extends TestCase
     {
         $event = AbstractEmptyEventStub::instance();
 
-        $this->assertEquals([], $event->getPayload());
+        static::assertEquals([], $event->getPayload());
     }
 
     public function testReconstitute(): void
@@ -41,7 +41,7 @@ class AbstractEmptyEventTest extends TestCase
             ]
         );
 
-        $this->assertEquals($metadata, $event->getMetadata());
-        $this->assertEquals($createdAt, $event->getCreatedAt());
+        static::assertEquals($metadata, $event->getMetadata());
+        static::assertEquals($createdAt, $event->getCreatedAt());
     }
 }

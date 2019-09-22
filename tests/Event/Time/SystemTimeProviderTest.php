@@ -30,7 +30,7 @@ class SystemTimeProviderTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             $currentTime = $timeProvider->getCurrentTime();
 
-            $this->assertTrue($currentTime > $previousTime);
+            static::assertTrue($currentTime > $previousTime);
 
             $previousTime = $currentTime;
         }

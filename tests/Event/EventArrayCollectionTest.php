@@ -15,6 +15,7 @@ namespace Gears\Event\Tests;
 
 use Gears\Event\Event;
 use Gears\Event\EventArrayCollection;
+use Gears\Event\Exception\InvalidEventException;
 use Gears\Event\Tests\Stub\AbstractEmptyEventStub;
 use PHPUnit\Framework\TestCase;
 
@@ -23,12 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class EventArrayCollectionTest extends TestCase
 {
-    /**
-     * @expectedException \Gears\Event\Exception\InvalidEventException
-     * @expectedExceptionMessageRegExp /Event collection only accepts .+, string given/
-     */
     public function testInvalidTypeCollection(): void
     {
+        $this->expectException(InvalidEventException::class);
+        $this->expectExceptionMessageRegExp('/^Event collection only accepts ".+", "string" given$/');
+
         new EventArrayCollection(['event']);
     }
 
@@ -40,12 +40,12 @@ class EventArrayCollectionTest extends TestCase
         ];
         $collection = new EventArrayCollection($events);
 
-        $this->assertCount(2, $collection);
+        static::assertCount(2, $collection);
 
         foreach ($collection as $event) {
-            $this->assertInstanceOf(Event::class, $event);
+            static::assertInstanceOf(Event::class, $event);
         }
 
-        $this->assertNull($collection->key());
+        static::assertNull($collection->key());
     }
 }

@@ -26,8 +26,8 @@ class AbstractEventTest extends TestCase
         $payload = ['Parameter' => 'value'];
         $event = AbstractEventStub::instance($payload);
 
-        $this->assertEquals($payload, $event->getPayload());
-        $this->assertEquals($payload['Parameter'], $event->get('Parameter'));
+        static::assertEquals($payload, $event->getPayload());
+        static::assertEquals($payload['Parameter'], $event->get('Parameter'));
     }
 
     public function testReconstitute(): void
@@ -43,7 +43,7 @@ class AbstractEventTest extends TestCase
             ]
         );
 
-        $this->assertEquals($metadata, $event->getMetadata());
-        $this->assertEquals($createdAt, $event->getCreatedAt());
+        static::assertEquals($metadata, $event->getMetadata());
+        static::assertEquals($createdAt, $event->getCreatedAt());
     }
 }

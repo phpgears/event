@@ -15,6 +15,7 @@ namespace Gears\Event\Tests;
 
 use Gears\Event\Event;
 use Gears\Event\EventIteratorCollection;
+use Gears\Event\Exception\InvalidEventException;
 use Gears\Event\Tests\Stub\AbstractEmptyEventStub;
 use PHPUnit\Framework\TestCase;
 
@@ -23,12 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class EventIteratorCollectionTest extends TestCase
 {
-    /**
-     * @expectedException \Gears\Event\Exception\InvalidEventException
-     * @expectedExceptionMessageRegExp /Event collection only accepts .+, string given/
-     */
     public function testInvalidTypeCollection(): void
     {
+        $this->expectException(InvalidEventException::class);
+        $this->expectExceptionMessageRegExp('/^Event collection only accepts ".+", "string" given$/');
+
         (new EventIteratorCollection(new \ArrayIterator(['event'])))->current();
     }
 
@@ -42,13 +42,13 @@ class EventIteratorCollectionTest extends TestCase
 
         $collection->next();
         $currentKey = $collection->key();
-        $this->assertCount(2, $collection);
-        $this->assertEquals($currentKey, $collection->key());
+        static::assertCount(2, $collection);
+        static::assertEquals($currentKey, $collection->key());
 
         foreach ($collection as $event) {
-            $this->assertInstanceOf(Event::class, $event);
+            static::assertInstanceOf(Event::class, $event);
         }
 
-        $this->assertNull($collection->key());
+        static::assertNull($collection->key());
     }
 }

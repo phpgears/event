@@ -14,7 +14,7 @@
 
 Event base classes and handling interfaces
 
-This package only provides the building blocks to Event
+This package only provides the building blocks to events
 
 ## Installation
 
@@ -34,9 +34,9 @@ require './vendor/autoload.php';
 
 ### Events
 
-Events are DTOs that carry all the information for an action to happen
+Events are DTOs that carry all the information of an already happened situation
 
-You can create your own by implementing `Gears\Event\Event` or extending from `Gears\Event\AbstractEvent` which ensures event immutability and payload and metadata is composed only of **scalar values** which is a very interesting capability. AbstractEvent has a private constructor forcing you to create events using the _occurred_ static method
+You can create your own by implementing `Gears\Event\Event` or extending from `Gears\Event\AbstractEvent` which ensures event immutability and payload and metadata is composed only of **scalar values** which is a very interesting capability. AbstractEvent has a private constructor forcing you to create events using _occurred_ static method on your named constructors
 
 ```php
 use Gears\Event\AbstractEvent;
@@ -48,7 +48,7 @@ class CreateUserEvent extends AbstractEvent
         string lastname,
         \DateTimeImmutable $birthDate
     ): self {
-        return new occurred([
+        return static::occurred([
             'name' => $name,
             'lastname' => $lastname,
             'birthDate' => $birthDate->format('U'),
@@ -72,7 +72,7 @@ class CreateUserEvent extends AbstractEmptyEvent
 
 ### Collection
 
-Events can be grouped into iterables implementing `Gears\Event\EventCollection` objects, `Gears\Event\EventArrayCollection` is provided accepting only instances of `Gears\Event\Event`
+Events can be grouped into iterables implementing `Gears\Event\EventCollection` objects, `Gears\Event\EventArrayCollection` and `Gears\Event\EventIteratorCollection` are provided accepting only instances of `Gears\Event\Event`
 
 #### Async events
 

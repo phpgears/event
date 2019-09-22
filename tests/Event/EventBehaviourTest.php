@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\Event\Tests;
 
+use Gears\DTO\Exception\InvalidScalarParameterException;
 use Gears\Event\Tests\Stub\EventBehaviourStub;
 use PHPUnit\Framework\TestCase;
 
@@ -21,12 +22,13 @@ use PHPUnit\Framework\TestCase;
  */
 class EventBehaviourTest extends TestCase
 {
-    /**
-     * @expectedException \Gears\DTO\Exception\InvalidScalarParameterException
-     * @expectedExceptionMessageRegExp /^Class .+ can only accept scalar metadata parameters, stdClass given$/
-     */
     public function testInvalidMetadata(): void
     {
+        $this->expectException(InvalidScalarParameterException::class);
+        $this->expectExceptionMessageRegExp(
+            '/^Class ".+" can only accept scalar metadata parameters, "stdClass" given$/'
+        );
+
         new EventBehaviourStub(['file' => new \stdClass()]);
     }
 
@@ -40,8 +42,8 @@ class EventBehaviourTest extends TestCase
         $createdAt = new \DateTimeImmutable('now');
         $stub = new EventBehaviourStub($metadata, $createdAt);
 
-        $this->assertEquals($metadata, $stub->getMetadata());
-        $this->assertEquals($createdAt, $stub->getCreatedAt());
+        static::assertEquals($metadata, $stub->getMetadata());
+        static::assertEquals($createdAt, $stub->getCreatedAt());
     }
 
     public function testMetadataSet(): void
@@ -49,11 +51,11 @@ class EventBehaviourTest extends TestCase
         $metadata = ['userId' => '123456'];
         $stub = new EventBehaviourStub([]);
 
-        $this->assertEmpty($stub->getMetadata());
+        static::assertEmpty($stub->getMetadata());
 
         $newStub = $stub->withMetadata($metadata);
 
-        $this->assertNotSame($stub, $newStub);
-        $this->assertEquals($metadata, $newStub->getMetadata());
+        static::assertNotSame($stub, $newStub);
+        static::assertEquals($metadata, $newStub->getMetadata());
     }
 }

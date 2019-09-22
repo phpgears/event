@@ -29,6 +29,6 @@ class AbstractEventStub extends AbstractEvent
      */
     public static function instance(array $payload): self
     {
-        return self::occurred($payload);
+        return static::occurred($payload);
     }
 }

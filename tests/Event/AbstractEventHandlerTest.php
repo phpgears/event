@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\Event\Tests;
 
+use Gears\Event\Exception\InvalidEventException;
 use Gears\Event\Tests\Stub\AbstractEmptyEventStub;
 use Gears\Event\Tests\Stub\AbstractEventHandlerStub;
 use Gears\Event\Tests\Stub\AbstractEventStub;
@@ -23,12 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractEventHandlerTest extends TestCase
 {
-    /**
-     * @expectedException \Gears\Event\Exception\InvalidEventException
-     * @expectedExceptionMessageRegExp /Event must be a .+\\AbstractEventStub, .+ given/
-     */
     public function testInvalidEventType(): void
     {
+        $this->expectException(InvalidEventException::class);
+        $this->expectExceptionMessageRegExp('/^Event must be a ".+\\\AbstractEventStub", ".+" given$/');
+
         $handler = new AbstractEventHandlerStub();
         $handler->handle(AbstractEmptyEventStub::instance());
     }
@@ -38,6 +38,6 @@ class AbstractEventHandlerTest extends TestCase
         $handler = new AbstractEventHandlerStub();
         $handler->handle(AbstractEventStub::instance([]));
 
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 }
