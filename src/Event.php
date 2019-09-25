@@ -51,13 +51,13 @@ interface Event
     public function getMetadata(): array;
 
     /**
-     * Get event with new metadata.
+     * Get event with added metadata.
      *
      * @param array<string, mixed> $metadata
      *
      * @return mixed|self
      */
-    public function withMetadata(array $metadata);
+    public function withAddedMetadata(array $metadata);
 
     /**
      * Get event creation time.

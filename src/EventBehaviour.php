@@ -51,16 +51,17 @@ trait EventBehaviour
     }
 
     /**
-     * Get event with new metadata.
+     * Get event with added metadata.
      *
      * @param array<string, mixed> $metadata
      *
      * @return mixed|self
      */
-    final public function withMetadata(array $metadata)
+    final public function withAddedMetadata(array $metadata)
     {
         /* @var self $self */
         $self = deep_copy($this);
+
         $self->setMetadata($metadata);
 
         return $self;
@@ -69,15 +70,13 @@ trait EventBehaviour
     /**
      * Set event metadata.
      *
-     * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $metadata
      *
      * @throws InvalidScalarParameterException
      */
-    private function setMetadata(array $parameters): void
+    private function setMetadata(array $metadata): void
     {
-        $this->metadata = [];
-
-        foreach ($parameters as $parameter => $value) {
+        foreach ($metadata as $parameter => $value) {
             try {
                 $this->checkParameterType($value);
             } catch (InvalidScalarParameterException $exception) {

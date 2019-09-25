@@ -48,14 +48,21 @@ class EventBehaviourTest extends TestCase
 
     public function testMetadataSet(): void
     {
-        $metadata = ['userId' => '123456'];
         $stub = new EventBehaviourStub([]);
 
         static::assertEmpty($stub->getMetadata());
 
-        $newStub = $stub->withMetadata($metadata);
+        $metadata = ['userId' => '123456'];
+        $newStub = $stub->withAddedMetadata($metadata);
 
         static::assertNotSame($stub, $newStub);
         static::assertEquals($metadata, $newStub->getMetadata());
+
+
+        $addedMetadata = ['contactId' => '654321'];
+        $addedStub = $newStub->withAddedMetadata($addedMetadata);
+
+        static::assertNotSame($stub, $addedStub);
+        static::assertEquals(\array_merge($metadata, $addedMetadata), $addedStub->getMetadata());
     }
 }
