@@ -26,7 +26,7 @@ abstract class AbstractEventHandler implements EventHandler
     {
         if (!$this->isEventSupported($event)) {
             throw new InvalidEventException(\sprintf(
-                'Event must be a "%s", "%s" given',
+                'Event must be one of: "%s", "%s" given',
                 \implode('"or "', $this->getSupportedEventTypes()),
                 \get_class($event)
             ));
@@ -44,17 +44,13 @@ abstract class AbstractEventHandler implements EventHandler
      */
     private function isEventSupported(Event $event): bool
     {
-        $supported = false;
-
         foreach ($this->getSupportedEventTypes() as $supportedEventType) {
             if (\is_a($event, $supportedEventType)) {
-                $supported = true;
-
-                break;
+                return true;
             }
         }
 
-        return $supported;
+        return false;
     }
 
     /**

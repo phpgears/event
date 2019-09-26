@@ -27,7 +27,7 @@ class AbstractEventHandlerTest extends TestCase
     public function testInvalidEventType(): void
     {
         $this->expectException(InvalidEventException::class);
-        $this->expectExceptionMessageRegExp('/^Event must be a ".+\\\AbstractEventStub", ".+" given$/');
+        $this->expectExceptionMessageRegExp('/^Event must be one of: ".+\\\AbstractEventStub", ".+" given$/');
 
         $handler = new AbstractEventHandlerStub();
         $handler->handle(AbstractEmptyEventStub::instance());
