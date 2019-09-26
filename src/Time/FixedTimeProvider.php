@@ -49,10 +49,13 @@ final class FixedTimeProvider implements TimeProvider
     /**
      * Set fixed date.
      *
-     * @param \DateTimeImmutable $fixedTime
+     * @param \DateTimeInterface $fixedTime
      */
-    public function setCurrentTime(\DateTimeImmutable $fixedTime): void
+    public function setCurrentTime(\DateTimeInterface $fixedTime): void
     {
+        if ($fixedTime instanceof \DateTime) {
+            $fixedTime = \DateTimeImmutable::createFromMutable($fixedTime);
+        }
         $this->fixedTime = $fixedTime->setTimezone($this->timeZone);
     }
 

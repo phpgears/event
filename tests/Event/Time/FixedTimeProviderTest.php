@@ -29,7 +29,7 @@ class FixedTimeProviderTest extends TestCase
 
         static::assertEquals($fixedTime, $timeProvider->getCurrentTime());
 
-        $newTime = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $newTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $timeProvider->setCurrentTime($newTime);
         static::assertEquals($newTime, $timeProvider->getCurrentTime());
