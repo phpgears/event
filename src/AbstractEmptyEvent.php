@@ -26,14 +26,12 @@ abstract class AbstractEmptyEvent implements Event
     /**
      * AbstractEmptyEvent constructor.
      *
-     * @param array<string, mixed> $metadata
-     * @param \DateTimeImmutable   $createdAt
+     * @param \DateTimeImmutable $createdAt
      */
-    private function __construct(array $metadata, \DateTimeImmutable $createdAt)
+    private function __construct(\DateTimeImmutable $createdAt)
     {
         $this->assertImmutable();
 
-        $this->setMetadata($metadata);
         $this->createdAt = $createdAt->setTimezone(new \DateTimeZone('UTC'));
     }
 
@@ -48,7 +46,7 @@ abstract class AbstractEmptyEvent implements Event
     {
         $timeProvider = $timeProvider ?? new SystemTimeProvider();
 
-        return new static([], $timeProvider->getCurrentTime());
+        return new static($timeProvider->getCurrentTime());
     }
 
     /**
@@ -60,7 +58,13 @@ abstract class AbstractEmptyEvent implements Event
      */
     public static function reconstitute(array $payload, array $attributes)
     {
-        return new static($attributes['metadata'], $attributes['createdAt']);
+        $event = new static($attributes['createdAt']);
+
+        if (isset($attributes['metadata'])) {
+            $event->addMetadata($attributes['metadata']);
+        }
+
+        return $event;
     }
 
     /**

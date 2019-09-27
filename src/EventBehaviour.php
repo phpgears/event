@@ -62,7 +62,7 @@ trait EventBehaviour
         /* @var self $self */
         $self = deep_copy($this);
 
-        $self->setMetadata($metadata);
+        $self->addMetadata($metadata);
 
         return $self;
     }
@@ -74,7 +74,7 @@ trait EventBehaviour
      *
      * @throws InvalidScalarParameterException
      */
-    private function setMetadata(array $metadata): void
+    private function addMetadata(array $metadata): void
     {
         foreach ($metadata as $parameter => $value) {
             try {

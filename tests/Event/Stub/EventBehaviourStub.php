@@ -31,7 +31,7 @@ class EventBehaviourStub
      */
     public function __construct(array $metadata, ?\DateTimeImmutable $createdAt = null)
     {
-        $this->setMetadata($metadata);
+        $this->addMetadata($metadata);
         $this->createdAt = $createdAt ?? new \DateTimeImmutable('now');
     }
 
