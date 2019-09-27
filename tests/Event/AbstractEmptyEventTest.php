@@ -35,13 +35,13 @@ class AbstractEmptyEventTest extends TestCase
 
         $event = AbstractEmptyEventStub::reconstitute(
             [],
+            $createdAt,
             [
                 'metadata' => $metadata,
-                'createdAt' => $createdAt,
             ]
         );
 
-        static::assertEquals($metadata, $event->getMetadata());
         static::assertEquals($createdAt, $event->getCreatedAt());
+        static::assertEquals($metadata, $event->getMetadata());
     }
 }

@@ -70,9 +70,10 @@ interface Event
      * Reconstitute message.
      *
      * @param array<string, mixed> $payload
+     * @param \DateTimeImmutable   $createdAt
      * @param array<string, mixed> $attributes
      *
      * @return mixed|self
      */
-    public static function reconstitute(array $payload, array $attributes);
+    public static function reconstitute(array $payload, \DateTimeImmutable $createdAt, array $attributes);
 }

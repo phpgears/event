@@ -56,9 +56,9 @@ abstract class AbstractEmptyEvent implements Event
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function reconstitute(array $payload, array $attributes)
+    public static function reconstitute(array $payload, \DateTimeImmutable $createdAt, array $attributes)
     {
-        $event = new static($attributes['createdAt']);
+        $event = new static($createdAt);
 
         if (isset($attributes['metadata'])) {
             $event->addMetadata($attributes['metadata']);

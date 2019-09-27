@@ -57,9 +57,9 @@ abstract class AbstractEvent implements Event
      *
      * @return mixed|self
      */
-    public static function reconstitute(array $payload, array $attributes)
+    public static function reconstitute(array $payload, \DateTimeImmutable $createdAt, array $attributes)
     {
-        $event = new static($payload, $attributes['createdAt']);
+        $event = new static($payload, $createdAt);
 
         if (isset($attributes['metadata'])) {
             $event->addMetadata($attributes['metadata']);
