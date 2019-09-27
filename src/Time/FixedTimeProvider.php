@@ -40,10 +40,7 @@ final class FixedTimeProvider implements TimeProvider
     {
         $this->timeZone = $timeZone ?? new \DateTimeZone('UTC');
 
-        if ($fixedTime instanceof \DateTime) {
-            $fixedTime = \DateTimeImmutable::createFromMutable($fixedTime);
-        }
-        $this->fixedTime = $fixedTime->setTimezone($this->timeZone);
+        $this->setCurrentTime($fixedTime);
     }
 
     /**
