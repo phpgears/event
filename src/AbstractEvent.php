@@ -38,6 +38,14 @@ abstract class AbstractEvent implements Event
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getEventType(): string
+    {
+        return \get_called_class();
+    }
+
+    /**
      * Instantiate new event.
      *
      * @param array<string, mixed> $payload

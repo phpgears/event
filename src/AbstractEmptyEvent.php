@@ -36,6 +36,14 @@ abstract class AbstractEmptyEvent implements Event
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getEventType(): string
+    {
+        return \get_called_class();
+    }
+
+    /**
      * Instantiate new event.
      *
      * @param TimeProvider $timeProvider

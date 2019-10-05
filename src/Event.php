@@ -19,6 +19,13 @@ namespace Gears\Event;
 interface Event
 {
     /**
+     * Get event type.
+     *
+     * @return string
+     */
+    public function getEventType(): string;
+
+    /**
      * Check parameter existence.
      *
      * @param string $parameter

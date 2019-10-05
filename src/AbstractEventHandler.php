@@ -24,33 +24,16 @@ abstract class AbstractEventHandler implements EventHandler
      */
     final public function handle(Event $event): void
     {
-        if (!$this->isEventSupported($event)) {
+        if (!\in_array($event->getEventType(), $this->getSupportedEventTypes(), true)) {
             throw new InvalidEventException(\sprintf(
-                'Event must be one of: "%s", "%s" given',
+                'Event handler "%s" can only handle events of: "%s", "%s" given',
+                self::class,
                 \implode('"or "', $this->getSupportedEventTypes()),
                 \get_class($event)
             ));
         }
 
         $this->handleEvent($event);
-    }
-
-    /**
-     * Is event supported.
-     *
-     * @param Event $event
-     *
-     * @return bool
-     */
-    private function isEventSupported(Event $event): bool
-    {
-        foreach ($this->getSupportedEventTypes() as $supportedEventType) {
-            if (\is_a($event, $supportedEventType)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
