@@ -40,15 +40,26 @@ class EventIteratorCollectionTest extends TestCase
         ];
         $collection = new EventIteratorCollection(new \ArrayIterator($events));
 
-        $collection->next();
-        $currentKey = $collection->key();
         static::assertCount(2, $collection);
-        static::assertEquals($currentKey, $collection->key());
 
         foreach ($collection as $event) {
             static::assertInstanceOf(Event::class, $event);
         }
 
         static::assertNull($collection->key());
+    }
+
+    public function testCollectionCount(): void
+    {
+        $events = [
+            AbstractEmptyEventStub::instance(),
+            AbstractEmptyEventStub::instance(),
+        ];
+        $collection = new EventIteratorCollection(new \IteratorIterator(new \ArrayIterator($events)));
+
+        $collection->next();
+        $currentKey = $collection->key();
+        static::assertCount(2, $collection);
+        static::assertEquals($currentKey, $collection->key());
     }
 }
