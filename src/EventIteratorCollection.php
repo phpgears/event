@@ -91,6 +91,10 @@ final class EventIteratorCollection implements EventCollection
      */
     public function count(): int
     {
+        if ($this->iterator instanceof \EmptyIterator) {
+            return 0;
+        }
+
         if ($this->iterator instanceof \Countable) {
             return $this->iterator->count();
         }

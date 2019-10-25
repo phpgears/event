@@ -49,7 +49,25 @@ class EventIteratorCollectionTest extends TestCase
         static::assertNull($collection->key());
     }
 
-    public function testCollectionCount(): void
+    public function testCollectionCountEmpty(): void
+    {
+        $collection = new EventIteratorCollection(new \EmptyIterator());
+
+        static::assertCount(0, $collection);
+    }
+
+    public function testCollectionCountCountable(): void
+    {
+        $events = [
+            AbstractEmptyEventStub::instance(),
+            AbstractEmptyEventStub::instance(),
+        ];
+        $collection = new EventIteratorCollection(new \ArrayIterator($events));
+
+        static::assertCount(2, $collection);
+    }
+
+    public function testCollectionCountNonCountable(): void
     {
         $events = [
             AbstractEmptyEventStub::instance(),
