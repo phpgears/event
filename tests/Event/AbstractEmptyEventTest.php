@@ -21,6 +21,13 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractEmptyEventTest extends TestCase
 {
+    public function testCommandType(): void
+    {
+        $stub = AbstractEmptyEventStub::instance();
+
+        static::assertEquals(AbstractEmptyEventStub::class, $stub->getEventType());
+    }
+
     public function testCreation(): void
     {
         $event = AbstractEmptyEventStub::instance();

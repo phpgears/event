@@ -21,6 +21,13 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractEventTest extends TestCase
 {
+    public function testCommandType(): void
+    {
+        $stub = AbstractEventStub::instance([]);
+
+        static::assertEquals(AbstractEventStub::class, $stub->getEventType());
+    }
+
     public function testCreation(): void
     {
         $payload = ['Parameter' => 'value'];

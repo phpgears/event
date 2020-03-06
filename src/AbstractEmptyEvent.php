@@ -40,7 +40,7 @@ abstract class AbstractEmptyEvent implements Event
      */
     public function getEventType(): string
     {
-        return \get_called_class();
+        return static::class;
     }
 
     /**

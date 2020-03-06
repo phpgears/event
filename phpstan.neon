@@ -3,4 +3,13 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    - '/^Call to an undefined method DateTimeInterface::setTimezone\(\)\.$/'
+    - message: '/^Call to an undefined method DateTimeInterface::setTimezone\(\)\.$/'
+      path: src/Time/FixedTimeProvider.php
+    - message: '/^Unsafe usage of new static\(\)\.$/'
+      paths:
+        - src/AbstractEmptyEvent.php
+        - src/AbstractEvent.php
+    - message: '/^Method Gears\\Event\\Event(Array|Iterator)Collection::key\(\) has no return typehint specified\.$/'
+      paths:
+        - src/EventArrayCollection.php
+        - src/EventIteratorCollection.php

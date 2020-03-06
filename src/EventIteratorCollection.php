@@ -18,14 +18,14 @@ use Gears\Event\Exception\InvalidEventException;
 final class EventIteratorCollection implements EventCollection
 {
     /**
-     * @var \Iterator
+     * @var \Iterator<Event>
      */
     private $iterator;
 
     /**
      * EventIteratorCollection constructor.
      *
-     * @param \Iterator $iterator
+     * @param \Iterator<mixed> $iterator
      */
     public function __construct(\Iterator $iterator)
     {
@@ -39,6 +39,7 @@ final class EventIteratorCollection implements EventCollection
      */
     public function current(): Event
     {
+        /** @var mixed $event */
         $event = $this->iterator->current();
 
         if (!$event instanceof Event) {

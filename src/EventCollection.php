@@ -15,6 +15,8 @@ namespace Gears\Event;
 
 /**
  * Event collection.
+ *
+ * @extends \Iterator<Event>
  */
 interface EventCollection extends \Iterator, \Countable
 {
