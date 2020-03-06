@@ -15,6 +15,7 @@ namespace Gears\Event\Tests;
 
 use Gears\Event\Event;
 use Gears\Event\EventIteratorCollection;
+use Gears\Event\Exception\EventException;
 use Gears\Event\Exception\InvalidEventException;
 use Gears\Event\Tests\Stub\AbstractEmptyEventStub;
 use PHPUnit\Framework\TestCase;
@@ -56,17 +57,6 @@ class EventIteratorCollectionTest extends TestCase
         static::assertCount(0, $collection);
     }
 
-    public function testCollectionCountCountable(): void
-    {
-        $events = [
-            AbstractEmptyEventStub::instance(),
-            AbstractEmptyEventStub::instance(),
-        ];
-        $collection = new EventIteratorCollection(new \ArrayIterator($events));
-
-        static::assertCount(2, $collection);
-    }
-
     public function testCollectionCountNonCountable(): void
     {
         $events = [
@@ -79,5 +69,21 @@ class EventIteratorCollectionTest extends TestCase
         $currentKey = $collection->key();
         static::assertCount(2, $collection);
         static::assertEquals($currentKey, $collection->key());
+    }
+
+    public function testNoSerialization(): void
+    {
+        $this->expectException(EventException::class);
+        $this->expectExceptionMessage('Event collection "Gears\Event\EventIteratorCollection" cannot be serialized');
+
+        \serialize(new EventIteratorCollection(new \EmptyIterator()));
+    }
+
+    public function testNoDeserialization(): void
+    {
+        $this->expectException(EventException::class);
+        $this->expectExceptionMessage('Event collection "Gears\Event\EventIteratorCollection" cannot be unserialized');
+
+        \unserialize('O:35:"Gears\Event\EventIteratorCollection":0:{}');
     }
 }

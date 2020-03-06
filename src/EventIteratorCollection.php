@@ -13,8 +13,12 @@ declare(strict_types=1);
 
 namespace Gears\Event;
 
+use Gears\Event\Exception\EventException;
 use Gears\Event\Exception\InvalidEventException;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 final class EventIteratorCollection implements EventCollection
 {
     /**
@@ -116,5 +120,36 @@ final class EventIteratorCollection implements EventCollection
         }
 
         return $count;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function __sleep(): array
+    {
+        throw new EventException(\sprintf('Event collection "%s" cannot be serialized', static::class));
+    }
+
+    public function __wakeup(): void
+    {
+        throw new EventException(\sprintf('Event collection "%s" cannot be unserialized', static::class));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array
+    {
+        throw new EventException(\sprintf('Event collection "%s" cannot be serialized', static::class));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __unserialize(array $data): void
+    {
+        throw new EventException(\sprintf('Event collection "%s" cannot be unserialized', static::class));
     }
 }

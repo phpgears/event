@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace Gears\Event\Exception;
 
-class EventException extends \RuntimeException
+class EventException extends \LogicException
 {
 }

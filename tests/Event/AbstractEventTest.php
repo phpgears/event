@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\Event\Tests;
 
+use Gears\Event\Exception\EventException;
 use Gears\Event\Tests\Stub\AbstractEventStub;
 use PHPUnit\Framework\TestCase;
 
@@ -52,5 +53,21 @@ class AbstractEventTest extends TestCase
 
         static::assertEquals($createdAt, $event->getCreatedAt());
         static::assertEquals($metadata, $event->getMetadata());
+    }
+
+    public function testNoSerialization(): void
+    {
+        $this->expectException(EventException::class);
+        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be serialized');
+
+        \serialize(AbstractEventStub::instance([]));
+    }
+
+    public function testNoDeserialization(): void
+    {
+        $this->expectException(EventException::class);
+        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be unserialized');
+
+        \unserialize('O:40:"Gears\Event\Tests\Stub\AbstractEventStub":0:{}');
     }
 }

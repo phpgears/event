@@ -15,6 +15,7 @@ namespace Gears\Event\Tests;
 
 use Gears\Event\Event;
 use Gears\Event\EventArrayCollection;
+use Gears\Event\Exception\EventException;
 use Gears\Event\Exception\InvalidEventException;
 use Gears\Event\Tests\Stub\AbstractEmptyEventStub;
 use PHPUnit\Framework\TestCase;
@@ -47,5 +48,28 @@ class EventArrayCollectionTest extends TestCase
         }
 
         static::assertNull($collection->key());
+    }
+
+    public function testCollectionCountEmpty(): void
+    {
+        $collection = new EventArrayCollection([]);
+
+        static::assertCount(0, $collection);
+    }
+
+    public function testNoSerialization(): void
+    {
+        $this->expectException(EventException::class);
+        $this->expectExceptionMessage('Event collection "Gears\Event\EventArrayCollection" cannot be serialized');
+
+        \serialize(new EventArrayCollection([]));
+    }
+
+    public function testNoDeserialization(): void
+    {
+        $this->expectException(EventException::class);
+        $this->expectExceptionMessage('Event collection "Gears\Event\EventArrayCollection" cannot be unserialized');
+
+        \unserialize('O:32:"Gears\Event\EventArrayCollection":0:{}');
     }
 }
