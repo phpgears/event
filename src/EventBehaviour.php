@@ -59,7 +59,7 @@ trait EventBehaviour
      */
     final public function withAddedMetadata(array $metadata)
     {
-        /* @var self $self */
+        // @var self $self
         $self = deep_copy($this);
 
         $self->addMetadata($metadata);

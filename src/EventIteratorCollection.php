@@ -127,12 +127,12 @@ final class EventIteratorCollection implements EventCollection
      */
     public function __sleep(): array
     {
-        throw new EventException(\sprintf('Event collection "%s" cannot be serialized', static::class));
+        throw new EventException(\sprintf('Event collection "%s" cannot be serialized', self::class));
     }
 
     public function __wakeup(): void
     {
-        throw new EventException(\sprintf('Event collection "%s" cannot be unserialized', static::class));
+        throw new EventException(\sprintf('Event collection "%s" cannot be unserialized', self::class));
     }
 
     /**
@@ -140,7 +140,7 @@ final class EventIteratorCollection implements EventCollection
      */
     public function __serialize(): array
     {
-        throw new EventException(\sprintf('Event collection "%s" cannot be serialized', static::class));
+        throw new EventException(\sprintf('Event collection "%s" cannot be serialized', self::class));
     }
 
     /**
@@ -150,6 +150,6 @@ final class EventIteratorCollection implements EventCollection
      */
     public function __unserialize(array $data): void
     {
-        throw new EventException(\sprintf('Event collection "%s" cannot be unserialized', static::class));
+        throw new EventException(\sprintf('Event collection "%s" cannot be unserialized', self::class));
     }
 }
