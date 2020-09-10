@@ -19,7 +19,7 @@ use Gears\Event\Time\TimeProvider;
 /**
  * Abstract empty immutable event.
  */
-abstract class AbstractEmptyEvent implements Event
+abstract class AbstractEmptyEvent implements Event, \Serializable
 {
     use EventBehaviour;
 
@@ -102,12 +102,60 @@ abstract class AbstractEmptyEvent implements Event
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array
+    {
+        return [
+            'metadata' => $this->metadata,
+            'createdAt' => $this->createdAt->format(\DateTime::ATOM),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->setPayload([]);
+        $this->metadata = $data['metadata'];
+        $this->createdAt = \DateTimeImmutable::createFromFormat(\DateTime::ATOM, $data['createdAt']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize(): string
+    {
+        return \serialize([
+            'metadata' => $this->metadata,
+            'createdAt' => $this->createdAt->format(\DateTime::ATOM),
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param mixed $serialized
+     */
+    public function unserialize($serialized): void
+    {
+        $data = \unserialize($serialized, ['allowed_classes' => [\DateTimeImmutable::class]]);
+
+        $this->setPayload([]);
+        $this->metadata = $data['metadata'];
+        $this->createdAt = \DateTimeImmutable::createFromFormat(\DateTime::ATOM, $data['createdAt']);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @return string[]
      */
     final protected function getAllowedInterfaces(): array
     {
-        return [Event::class];
+        return [Event::class, \Serializable::class];
     }
 }

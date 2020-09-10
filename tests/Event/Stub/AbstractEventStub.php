@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Gears\Event\Tests\Stub;
 
 use Gears\Event\AbstractEvent;
+use Gears\Event\Time\FixedTimeProvider;
 
 /**
  * Abstract event stub class.
@@ -34,7 +35,10 @@ class AbstractEventStub extends AbstractEvent
      */
     public static function instance(array $payload): self
     {
-        return static::occurred($payload);
+        return static::occurred(
+            $payload,
+            new FixedTimeProvider(\DateTimeImmutable::createFromFormat(\DateTime::ATOM, '2020-01-01T00:00:00Z'))
+        );
     }
 
     /**

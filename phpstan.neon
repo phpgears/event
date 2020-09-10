@@ -7,4 +7,8 @@ parameters:
       paths:
         - src/AbstractEmptyEvent.php
         - src/AbstractEvent.php
+    - message: '/^Property Gears\\Event\\Abstract(Empty)?Event::\$createdAt \(DateTimeImmutable\) does not accept DateTimeImmutable\|false\.$/'
+      paths:
+        - src/AbstractEmptyEvent.php
+        - src/AbstractEvent.php
     - '/^Method Gears\\Event\\Abstract(Empty)?Event::setPayloadParameter\(\) has parameter \$reflection with generic class ReflectionClass but does not specify its types: T/'

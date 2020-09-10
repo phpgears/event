@@ -75,9 +75,7 @@ Events can be grouped into iterables implementing `Gears\Event\EventCollection` 
 
 Having event assuring all of its payload is composed only of scalar values proves handy when you want to delegate event handling to a message queue system such as RabbitMQ, Gearman or Apache Kafka, serializing/deserializing scalar values is trivial in any format and language
 
-Asynchronous behaviour must be implemented at EventBus level, event bus must be able to identify async events (a map of events, implementing an interface, by a payload parameter, ...) and enqueue them 
-
-If you want to have asynchronous behaviour on your EventBus have a look [phpgears/event-async](https://github.com/phpgears/event-async), there you'll find all the necessary pieces to start your async event bus
+Asynchronicity must be implemented at EventBus level, meaning the event bus implementation must be able to identify which events must be treated asynchronously and enqueue them
 
 ### Handlers
 

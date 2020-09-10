@@ -58,4 +58,27 @@ class AbstractEmptyEventTest extends TestCase
         static::assertEquals($metadata, $event->getMetadata());
         static::assertEquals($createdAt, $event->getCreatedAt());
     }
+
+    public function testSerialization(): void
+    {
+        $stub = AbstractEmptyEventStub::fixedInstance()->withAddedMetadata(['meta' => 100]);
+
+        $serialized = \version_compare(\PHP_VERSION, '7.4.0') >= 0
+            ? 'O:45:"Gears\Event\Tests\Stub\AbstractEmptyEventStub":2:{'
+                . 's:8:"metadata";a:1:{s:4:"meta";i:100;}'
+                . 's:9:"createdAt";s:25:"2020-01-01T00:00:00+00:00";'
+                . '}'
+            : 'C:45:"Gears\Event\Tests\Stub\AbstractEmptyEventStub":93:{a:2:{'
+                . 's:8:"metadata";a:1:{s:4:"meta";i:100;}'
+                . 's:9:"createdAt";s:25:"2020-01-01T00:00:00+00:00";'
+                . '}}';
+
+        static::assertSame($serialized, \serialize($stub));
+
+        /** @var AbstractEmptyEventStub $unserializedStub */
+        $unserializedStub = \unserialize($serialized);
+        static::assertSame($stub->getPayload(), $unserializedStub->getPayload());
+        static::assertSame($stub->getMetadata(), $unserializedStub->getMetadata());
+        static::assertSame($stub->getCreatedAt()->format('U'), $unserializedStub->getCreatedAt()->format('U'));
+    }
 }
