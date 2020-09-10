@@ -9,7 +9,3 @@ parameters:
       paths:
         - src/AbstractEmptyEvent.php
         - src/AbstractEvent.php
-    - message: '/^Method Gears\\Event\\Event(Array|Iterator)Collection::key\(\) has no return typehint specified\.$/'
-      paths:
-        - src/EventArrayCollection.php
-        - src/EventIteratorCollection.php
