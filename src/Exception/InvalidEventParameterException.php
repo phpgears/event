@@ -11,13 +11,8 @@
 
 declare(strict_types=1);
 
-namespace Gears\Event\Tests\Stub;
+namespace Gears\Event\Exception;
 
-use Gears\Event\AbstractEmptyEvent;
-
-/**
- * Abstract empty event stub class.
- */
-class AbstractEmptyEventStub extends AbstractEmptyEvent
+class InvalidEventParameterException extends \RuntimeException
 {
 }

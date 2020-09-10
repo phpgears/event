@@ -21,6 +21,11 @@ use Gears\Event\AbstractEvent;
 class AbstractEventStub extends AbstractEvent
 {
     /**
+     * @var string
+     */
+    private $parameter;
+
+    /**
      * Instantiate event.
      *
      * @param mixed[] $payload
@@ -30,5 +35,13 @@ class AbstractEventStub extends AbstractEvent
     public static function instance(array $payload): self
     {
         return static::occurred($payload);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getParameter(): ?string
+    {
+        return $this->parameter !== null ? \strtolower($this->parameter) : null;
     }
 }

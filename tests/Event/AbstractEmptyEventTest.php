@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Gears\Event\Tests;
 
-use Gears\Event\Exception\EventException;
 use Gears\Event\Tests\Stub\AbstractEmptyEventStub;
 use PHPUnit\Framework\TestCase;
 
@@ -22,50 +21,41 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractEmptyEventTest extends TestCase
 {
-    public function testCommandType(): void
+    public function testEventType(): void
     {
         $stub = AbstractEmptyEventStub::instance();
 
         static::assertEquals(AbstractEmptyEventStub::class, $stub->getEventType());
     }
 
-    public function testCreation(): void
+    public function testNoPayload(): void
     {
-        $event = AbstractEmptyEventStub::instance();
+        $stub = AbstractEmptyEventStub::instance();
 
-        static::assertEquals([], $event->getPayload());
+        static::assertEquals([], $stub->getPayload());
+    }
+
+    public function testToArray(): void
+    {
+        $stub = AbstractEmptyEventStub::instance();
+
+        static::assertEquals([], $stub->toArray());
     }
 
     public function testReconstitute(): void
     {
         $metadata = ['userId' => '123456'];
-        $createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $createdAt = new \DateTimeImmutable('now');
 
         $event = AbstractEmptyEventStub::reconstitute(
-            [],
+            ['parameter' => 'Value'],
             $createdAt,
-            [
-                'metadata' => $metadata,
-            ]
+            ['metadata' => $metadata]
         );
 
-        static::assertEquals($createdAt, $event->getCreatedAt());
+        static::assertEquals([], $event->getPayload());
+        static::assertEquals([], $event->toArray());
         static::assertEquals($metadata, $event->getMetadata());
-    }
-
-    public function testNoSerialization(): void
-    {
-        $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEmptyEventStub" cannot be serialized');
-
-        \serialize(AbstractEmptyEventStub::instance());
-    }
-
-    public function testNoDeserialization(): void
-    {
-        $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEmptyEventStub" cannot be unserialized');
-
-        \unserialize('O:45:"Gears\Event\Tests\Stub\AbstractEmptyEventStub":0:{}');
+        static::assertEquals($createdAt, $event->getCreatedAt());
     }
 }

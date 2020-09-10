@@ -26,9 +26,9 @@ abstract class AbstractEventHandler implements EventHandler
     {
         if (!\in_array($event->getEventType(), $this->getSupportedEventTypes(), true)) {
             throw new InvalidEventException(\sprintf(
-                'Event handler "%s" can only handle events of: "%s", "%s" given',
+                'Event handler "%s" can only handle "%s" event types, "%s" given',
                 static::class,
-                \implode('"or "', $this->getSupportedEventTypes()),
+                \implode('", "', $this->getSupportedEventTypes()),
                 \get_class($event)
             ));
         }

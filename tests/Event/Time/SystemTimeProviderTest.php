@@ -25,7 +25,7 @@ class SystemTimeProviderTest extends TestCase
     {
         $timeProvider = new SystemTimeProvider();
 
-        $previousTime = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $previousTime = new \DateTimeImmutable('now');
 
         for ($i = 0; $i < 10; $i++) {
             $currentTime = $timeProvider->getCurrentTime();

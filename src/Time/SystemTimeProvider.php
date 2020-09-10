@@ -19,25 +19,10 @@ namespace Gears\Event\Time;
 final class SystemTimeProvider implements TimeProvider
 {
     /**
-     * @var \DateTimeZone
-     */
-    private $timeZone;
-
-    /**
-     * SystemTimeProvider constructor.
-     *
-     * @param \DateTimeZone|null $timeZone
-     */
-    public function __construct(?\DateTimeZone $timeZone = null)
-    {
-        $this->timeZone = $timeZone ?? new \DateTimeZone('UTC');
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getCurrentTime(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable('now', $this->timeZone);
+        return new \DateTimeImmutable('now');
     }
 }

@@ -3,9 +3,8 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    - message: '/^Call to an undefined method DateTimeInterface::setTimezone\(\)\.$/'
-      path: src/Time/FixedTimeProvider.php
     - message: '/^Unsafe usage of new static\(\)\.$/'
       paths:
         - src/AbstractEmptyEvent.php
         - src/AbstractEvent.php
+    - '/^Method Gears\\Event\\Abstract(Empty)?Event::setPayloadParameter\(\) has parameter \$reflection with generic class ReflectionClass but does not specify its types: T/'

@@ -15,17 +15,15 @@ namespace Gears\Event;
 
 use Gears\DTO\Exception\InvalidScalarParameterException;
 use Gears\DTO\ScalarPayloadBehaviour;
-use Gears\Immutability\ImmutabilityBehaviour;
-
-use function DeepCopy\deep_copy;
+use Gears\Event\Exception\InvalidEventParameterException;
 
 /**
  * Event metadata behaviour.
  */
 trait EventBehaviour
 {
-    use ImmutabilityBehaviour, ScalarPayloadBehaviour {
-        ScalarPayloadBehaviour::__call insteadof ImmutabilityBehaviour;
+    use ScalarPayloadBehaviour {
+        setPayloadParameter as private scalarSetPayloadParameter;
     }
 
     /**
@@ -59,8 +57,7 @@ trait EventBehaviour
      */
     final public function withAddedMetadata(array $metadata)
     {
-        // @var self $self
-        $self = deep_copy($this);
+        $self = clone $this;
 
         $self->addMetadata($metadata);
 
@@ -78,7 +75,7 @@ trait EventBehaviour
     {
         foreach ($metadata as $parameter => $value) {
             try {
-                $this->checkParameterType($value);
+                $this->assertPayloadParameterType($value);
             } catch (InvalidScalarParameterException $exception) {
                 throw new InvalidScalarParameterException(
                     \sprintf(
@@ -103,5 +100,49 @@ trait EventBehaviour
     final public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     * Extend original to prevent parameters set.
+     *
+     * @param \ReflectionClass $reflection
+     * @param string           $parameter
+     * @param mixed            $value
+     */
+    private function setPayloadParameter(\ReflectionClass $reflection, string $parameter, $value): void
+    {
+        if (\in_array($parameter, ['metadata', 'createdAt'], true)) {
+            throw new InvalidEventParameterException(
+                \sprintf('Event parameter "%s" on "%s" cannot be set', $parameter, static::class)
+            );
+        }
+
+        $this->scalarSetPayloadParameter($reflection, $parameter, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     * Extend original to prevent event parameters in definition.
+     *
+     * @return string[]
+     */
+    private function getPayloadDefinition(): array
+    {
+        $excludedProperties = \array_filter(\array_map(
+            static function (\ReflectionProperty $property): ?string {
+                return !$property->isStatic() ? $property->getName() : null;
+            },
+            (new \ReflectionClass(EventBehaviour::class))->getProperties()
+        ));
+
+        return \array_filter(\array_map(
+            static function (\ReflectionProperty $property) use ($excludedProperties): ?string {
+                return !$property->isStatic() && !\in_array($property->getName(), $excludedProperties, true)
+                    ? $property->getName()
+                    : null;
+            },
+            (new \ReflectionClass($this))->getProperties()
+        ));
     }
 }

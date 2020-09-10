@@ -41,11 +41,11 @@ You can create your own by implementing `Gears\Event\Event` or extending from `G
 ```php
 use Gears\Event\AbstractEvent;
 
-class CreateUserEvent extends AbstractEvent
+final class UserCreatedEvent extends AbstractEvent
 {
     public static function fromPersonalData(
         string $name,
-        string lastname,
+        string $lastname,
         \DateTimeImmutable $birthDate
     ): self {
         return static::occurred([
@@ -60,13 +60,10 @@ class CreateUserEvent extends AbstractEvent
 In case of a event without any payload you could extend `Gears\Event\AbstractEmptyEvent`
 
 ```php
-use Gears\Event\AbstractEvent;
+use Gears\Event\AbstractEmptyEvent;
 
-class CreateUserEvent extends AbstractEmptyEvent
+final class UserCreateEvent extends AbstractEmptyEvent
 {
-    public static function instance(): self {
-        return self::occurred();
-    }
 }
 ```
 
@@ -87,24 +84,22 @@ If you want to have asynchronous behaviour on your EventBus have a look [phpgear
 Events are handed over to implementations of `Gears\Event\EventHandler`, available in this package is `AbstractEventHandler` which verifies the type of the event so you can focus only on implementing the handling logic
 
 ```php
-class CreateUserEventHandler extends AbstractEventHandler
+class UserCreatedEventHandler extends AbstractEventHandler
 {
     protected function getSupportedEventType(): string
     {
-        return CreateUserEvent::class;
+        return UserCreatedEvent::class;
     }
 
-    protected function handleEvent(Event $event): void
+    protected function handleUserCreatedEvent(UserCreatedEvent $event): void
     {
-        /* @var CreateUserEvent $event */
-
         $user = new User(
             $event->getName(),
             $event->getLastname(),
             $event->getBirthDate()
         );
 
-        [...]
+        // [...]
     }
 }
 ```

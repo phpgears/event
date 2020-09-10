@@ -26,11 +26,13 @@ class EventBehaviourStub
     /**
      * EventMetadataBehaviourStub constructor.
      *
+     * @param iterable<mixed>         $payload
      * @param array<string, mixed>    $metadata
      * @param \DateTimeImmutable|null $createdAt
      */
-    public function __construct(array $metadata, ?\DateTimeImmutable $createdAt = null)
+    public function __construct(iterable $payload, array $metadata, ?\DateTimeImmutable $createdAt = null)
     {
+        $this->setPayload($payload);
         $this->addMetadata($metadata);
         $this->createdAt = $createdAt ?? new \DateTimeImmutable('now');
     }

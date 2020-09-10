@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Gears\Event;
 
-use Gears\Event\Exception\EventException;
 use Gears\Event\Time\SystemTimeProvider;
 use Gears\Event\Time\TimeProvider;
 
@@ -27,15 +26,14 @@ abstract class AbstractEvent implements Event
     /**
      * AbstractEvent constructor.
      *
-     * @param array<string, mixed> $payload
-     * @param \DateTimeImmutable   $createdAt
+     * @param iterable<mixed>    $payload
+     * @param \DateTimeImmutable $createdAt
      */
-    private function __construct(array $payload, \DateTimeImmutable $createdAt)
+    private function __construct(iterable $payload, \DateTimeImmutable $createdAt)
     {
-        $this->assertImmutable();
-
         $this->setPayload($payload);
-        $this->createdAt = $createdAt->setTimezone(new \DateTimeZone('UTC'));
+
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -44,6 +42,14 @@ abstract class AbstractEvent implements Event
     public function getEventType(): string
     {
         return static::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray(): array
+    {
+        return $this->getPayloadRaw();
     }
 
     /**
@@ -66,7 +72,7 @@ abstract class AbstractEvent implements Event
      *
      * @return mixed|self
      */
-    public static function reconstitute(array $payload, \DateTimeImmutable $createdAt, array $attributes)
+    public static function reconstitute(iterable $payload, \DateTimeImmutable $createdAt, array $attributes)
     {
         $event = new static($payload, $createdAt);
 
@@ -75,37 +81,6 @@ abstract class AbstractEvent implements Event
         }
 
         return $event;
-    }
-
-    /**
-     * @return string[]
-     */
-    final public function __sleep(): array
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be serialized', static::class));
-    }
-
-    final public function __wakeup(): void
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be unserialized', static::class));
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    final public function __serialize(): array
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be serialized', static::class));
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    final public function __unserialize(array $data): void
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be unserialized', static::class));
     }
 
     /**

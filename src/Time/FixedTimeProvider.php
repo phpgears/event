@@ -26,20 +26,12 @@ final class FixedTimeProvider implements TimeProvider
     private $fixedTime;
 
     /**
-     * @var \DateTimeZone
-     */
-    private $timeZone;
-
-    /**
      * FixedTimeProvider constructor.
      *
      * @param \DateTimeInterface $fixedTime
-     * @param \DateTimeZone|null $timeZone
      */
-    public function __construct(\DateTimeInterface $fixedTime, ?\DateTimeZone $timeZone = null)
+    public function __construct(\DateTimeInterface $fixedTime)
     {
-        $this->timeZone = $timeZone ?? new \DateTimeZone('UTC');
-
         $this->setCurrentTime($fixedTime);
     }
 
@@ -50,10 +42,12 @@ final class FixedTimeProvider implements TimeProvider
      */
     public function setCurrentTime(\DateTimeInterface $fixedTime): void
     {
+        /** @var \DateTime|\DateTimeImmutable $fixedTime */
         if ($fixedTime instanceof \DateTime) {
             $fixedTime = \DateTimeImmutable::createFromMutable($fixedTime);
         }
-        $this->fixedTime = $fixedTime->setTimezone($this->timeZone);
+
+        $this->fixedTime = $fixedTime;
     }
 
     /**

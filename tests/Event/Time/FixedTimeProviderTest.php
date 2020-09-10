@@ -23,13 +23,13 @@ class FixedTimeProviderTest extends TestCase
 {
     public function testTime(): void
     {
-        $fixedTime = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $fixedTime = new \DateTimeImmutable('now');
 
         $timeProvider = new FixedTimeProvider($fixedTime);
 
         static::assertEquals($fixedTime, $timeProvider->getCurrentTime());
 
-        $newTime = new \DateTime('now', new \DateTimeZone('UTC'));
+        $newTime = new \DateTime('now');
 
         $timeProvider->setCurrentTime($newTime);
         static::assertEquals($newTime, $timeProvider->getCurrentTime());

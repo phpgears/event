@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Gears\Event\Tests;
 
-use Gears\Event\Exception\EventException;
 use Gears\Event\Tests\Stub\AbstractEventStub;
 use PHPUnit\Framework\TestCase;
 
@@ -22,52 +21,48 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractEventTest extends TestCase
 {
-    public function testCommandType(): void
+    public function testEventType(): void
     {
         $stub = AbstractEventStub::instance([]);
 
         static::assertEquals(AbstractEventStub::class, $stub->getEventType());
     }
 
-    public function testCreation(): void
+    public function testNoPayload(): void
     {
-        $payload = ['Parameter' => 'value'];
-        $event = AbstractEventStub::instance($payload);
+        $stub = AbstractEventStub::instance([]);
 
-        static::assertEquals($payload, $event->getPayload());
-        static::assertEquals($payload['Parameter'], $event->get('Parameter'));
+        static::assertEquals(['parameter' => null], $stub->getPayload());
+    }
+
+    public function testPayload(): void
+    {
+        $stub = AbstractEventStub::instance(['parameter' => 'Value']);
+
+        static::assertEquals(['parameter' => 'value'], $stub->getPayload());
+    }
+
+    public function testToArray(): void
+    {
+        $stub = AbstractEventStub::instance(['parameter' => 'Value']);
+
+        static::assertEquals(['parameter' => 'Value'], $stub->toArray());
     }
 
     public function testReconstitute(): void
     {
         $metadata = ['userId' => '123456'];
-        $createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $createdAt = new \DateTimeImmutable('now');
 
         $event = AbstractEventStub::reconstitute(
-            [],
+            ['parameter' => 'Value'],
             $createdAt,
-            [
-                'metadata' => $metadata,
-            ]
+            ['metadata' => $metadata]
         );
 
-        static::assertEquals($createdAt, $event->getCreatedAt());
+        static::assertEquals(['parameter' => 'value'], $event->getPayload());
+        static::assertEquals(['parameter' => 'Value'], $event->toArray());
         static::assertEquals($metadata, $event->getMetadata());
-    }
-
-    public function testNoSerialization(): void
-    {
-        $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be serialized');
-
-        \serialize(AbstractEventStub::instance([]));
-    }
-
-    public function testNoDeserialization(): void
-    {
-        $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be unserialized');
-
-        \unserialize('O:40:"Gears\Event\Tests\Stub\AbstractEventStub":0:{}');
+        static::assertEquals($createdAt, $event->getCreatedAt());
     }
 }

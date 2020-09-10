@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Gears\Event;
 
-use Gears\Event\Exception\EventException;
 use Gears\Event\Time\SystemTimeProvider;
 use Gears\Event\Time\TimeProvider;
 
@@ -31,9 +30,9 @@ abstract class AbstractEmptyEvent implements Event
      */
     private function __construct(\DateTimeImmutable $createdAt)
     {
-        $this->assertImmutable();
+        $this->setPayload(null);
 
-        $this->createdAt = $createdAt->setTimezone(new \DateTimeZone('UTC'));
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -42,6 +41,32 @@ abstract class AbstractEmptyEvent implements Event
     public function getEventType(): string
     {
         return static::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function getPayload(): array
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function toArray(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get event instance.
+     *
+     * @return mixed|self
+     */
+    public static function instance()
+    {
+        return static::occurred();
     }
 
     /**
@@ -65,7 +90,7 @@ abstract class AbstractEmptyEvent implements Event
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function reconstitute(array $payload, \DateTimeImmutable $createdAt, array $attributes)
+    public static function reconstitute(iterable $payload, \DateTimeImmutable $createdAt, array $attributes)
     {
         $event = new static($createdAt);
 
@@ -74,37 +99,6 @@ abstract class AbstractEmptyEvent implements Event
         }
 
         return $event;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    final public function __serialize(): array
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be serialized', static::class));
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    final public function __unserialize(array $data): void
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be unserialized', static::class));
-    }
-
-    /**
-     * @return string[]
-     */
-    final public function __sleep(): array
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be serialized', static::class));
-    }
-
-    final public function __wakeup(): void
-    {
-        throw new EventException(\sprintf('Event "%s" cannot be unserialized', static::class));
     }
 
     /**

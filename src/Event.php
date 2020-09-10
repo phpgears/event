@@ -26,15 +26,6 @@ interface Event
     public function getEventType(): string;
 
     /**
-     * Check parameter existence.
-     *
-     * @param string $parameter
-     *
-     * @return bool
-     */
-    public function has(string $parameter): bool;
-
-    /**
      * Get parameter.
      *
      * @param string $parameter
@@ -44,11 +35,18 @@ interface Event
     public function get(string $parameter);
 
     /**
-     * Export message parameters.
+     * Export event parameters.
      *
      * @return array<string, mixed>
      */
     public function getPayload(): array;
+
+    /**
+     * Export event properties as array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(): array;
 
     /**
      * Get event metadata.
@@ -76,11 +74,11 @@ interface Event
     /**
      * Reconstitute message.
      *
-     * @param array<string, mixed> $payload
+     * @param iterable<mixed>      $payload
      * @param \DateTimeImmutable   $createdAt
      * @param array<string, mixed> $attributes
      *
      * @return mixed|self
      */
-    public static function reconstitute(array $payload, \DateTimeImmutable $createdAt, array $attributes);
+    public static function reconstitute(iterable $payload, \DateTimeImmutable $createdAt, array $attributes);
 }

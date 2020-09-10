@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Gears\Event\Tests;
 
 use Gears\DTO\Exception\InvalidScalarParameterException;
+use Gears\Event\Exception\InvalidEventParameterException;
 use Gears\Event\Tests\Stub\EventBehaviourStub;
 use PHPUnit\Framework\TestCase;
 
@@ -22,6 +23,26 @@ use PHPUnit\Framework\TestCase;
  */
 class EventBehaviourTest extends TestCase
 {
+    public function testPreventMetadataOverride(): void
+    {
+        $this->expectException(InvalidEventParameterException::class);
+        $this->expectExceptionMessageRegExp(
+            '/^Event parameter "metadata" on ".+" cannot be set$/'
+        );
+
+        new EventBehaviourStub(['metadata' => 'value'], []);
+    }
+
+    public function testPreventCreatedAtOverride(): void
+    {
+        $this->expectException(InvalidEventParameterException::class);
+        $this->expectExceptionMessageRegExp(
+            '/^Event parameter "createdAt" on ".+" cannot be set$/'
+        );
+
+        new EventBehaviourStub(['createdAt' => 'value'], []);
+    }
+
     public function testInvalidMetadata(): void
     {
         $this->expectException(InvalidScalarParameterException::class);
@@ -29,7 +50,7 @@ class EventBehaviourTest extends TestCase
             '/^Class ".+" can only accept scalar metadata parameters, "stdClass" given$/'
         );
 
-        new EventBehaviourStub(['file' => new \stdClass()]);
+        new EventBehaviourStub([], ['file' => new \stdClass()]);
     }
 
     public function testMetadata(): void
@@ -40,7 +61,7 @@ class EventBehaviourTest extends TestCase
             ],
         ];
         $createdAt = new \DateTimeImmutable('now');
-        $stub = new EventBehaviourStub($metadata, $createdAt);
+        $stub = new EventBehaviourStub([], $metadata, $createdAt);
 
         static::assertEquals($metadata, $stub->getMetadata());
         static::assertEquals($createdAt, $stub->getCreatedAt());
@@ -48,7 +69,7 @@ class EventBehaviourTest extends TestCase
 
     public function testMetadataSet(): void
     {
-        $stub = new EventBehaviourStub([]);
+        $stub = new EventBehaviourStub([], []);
 
         static::assertEmpty($stub->getMetadata());
 
@@ -57,7 +78,6 @@ class EventBehaviourTest extends TestCase
 
         static::assertNotSame($stub, $newStub);
         static::assertEquals($metadata, $newStub->getMetadata());
-
 
         $addedMetadata = ['contactId' => '654321'];
         $addedStub = $newStub->withAddedMetadata($addedMetadata);
