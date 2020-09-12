@@ -19,6 +19,14 @@ namespace Gears\Event;
 interface Event
 {
     /**
+     * PHP < 7.3 \DateTime::RFC3339_EXTENDED cannot handle microseconds on \DateTimeImmutable::createFromFormat.
+     * Remove when support for PHP < 7.3 is dropped.
+     *
+     * @see https://stackoverflow.com/a/48949373
+     */
+    public const DATE_RFC3339_EXTENDED = 'Y-m-d\TH:i:s.uP';
+
+    /**
      * Get event type.
      *
      * @return string

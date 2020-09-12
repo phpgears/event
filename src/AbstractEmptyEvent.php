@@ -108,7 +108,7 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
     {
         return [
             'metadata' => $this->metadata,
-            'createdAt' => $this->createdAt->format(\DateTime::ATOM),
+            'createdAt' => $this->createdAt->format(Event::DATE_RFC3339_EXTENDED),
         ];
     }
 
@@ -121,7 +121,7 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
     {
         $this->setPayload([]);
         $this->metadata = $data['metadata'];
-        $this->createdAt = \DateTimeImmutable::createFromFormat(\DateTime::ATOM, $data['createdAt']);
+        $this->createdAt = \DateTimeImmutable::createFromFormat(Event::DATE_RFC3339_EXTENDED, $data['createdAt']);
     }
 
     /**
@@ -131,7 +131,7 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
     {
         return \serialize([
             'metadata' => $this->metadata,
-            'createdAt' => $this->createdAt->format(\DateTime::ATOM),
+            'createdAt' => $this->createdAt->format(Event::DATE_RFC3339_EXTENDED),
         ]);
     }
 
@@ -146,7 +146,7 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
 
         $this->setPayload([]);
         $this->metadata = $data['metadata'];
-        $this->createdAt = \DateTimeImmutable::createFromFormat(\DateTime::ATOM, $data['createdAt']);
+        $this->createdAt = \DateTimeImmutable::createFromFormat(Event::DATE_RFC3339_EXTENDED, $data['createdAt']);
     }
 
     /**

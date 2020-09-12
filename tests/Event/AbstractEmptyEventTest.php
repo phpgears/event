@@ -66,11 +66,11 @@ class AbstractEmptyEventTest extends TestCase
         $serialized = \version_compare(\PHP_VERSION, '7.4.0') >= 0
             ? 'O:45:"Gears\Event\Tests\Stub\AbstractEmptyEventStub":2:{'
                 . 's:8:"metadata";a:1:{s:4:"meta";i:100;}'
-                . 's:9:"createdAt";s:25:"2020-01-01T00:00:00+00:00";'
+                . 's:9:"createdAt";s:32:"2020-01-01T00:00:00.000000+00:00";'
                 . '}'
-            : 'C:45:"Gears\Event\Tests\Stub\AbstractEmptyEventStub":93:{a:2:{'
+            : 'C:45:"Gears\Event\Tests\Stub\AbstractEmptyEventStub":100:{a:2:{'
                 . 's:8:"metadata";a:1:{s:4:"meta";i:100;}'
-                . 's:9:"createdAt";s:25:"2020-01-01T00:00:00+00:00";'
+                . 's:9:"createdAt";s:32:"2020-01-01T00:00:00.000000+00:00";'
                 . '}}';
 
         static::assertSame($serialized, \serialize($stub));

@@ -74,12 +74,12 @@ class AbstractEventTest extends TestCase
             ? 'O:40:"Gears\Event\Tests\Stub\AbstractEventStub":3:{'
                 . 's:7:"payload";a:1:{s:9:"parameter";s:5:"value";}'
                 . 's:8:"metadata";a:1:{s:4:"meta";i:100;}'
-                . 's:9:"createdAt";s:25:"2020-01-01T00:00:00+00:00";'
+                . 's:9:"createdAt";s:32:"2020-01-01T00:00:00.000000+00:00";'
                 . '}'
-            : 'C:40:"Gears\Event\Tests\Stub\AbstractEventStub":141:{a:3:{'
+            : 'C:40:"Gears\Event\Tests\Stub\AbstractEventStub":148:{a:3:{'
                 . 's:7:"payload";a:1:{s:9:"parameter";s:5:"value";}'
                 . 's:8:"metadata";a:1:{s:4:"meta";i:100;}'
-                . 's:9:"createdAt";s:25:"2020-01-01T00:00:00+00:00";'
+                . 's:9:"createdAt";s:32:"2020-01-01T00:00:00.000000+00:00";'
                 . '}}';
 
         static::assertSame($serialized, \serialize($stub));
