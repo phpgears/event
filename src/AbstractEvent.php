@@ -56,9 +56,9 @@ abstract class AbstractEvent implements Event, \Serializable
      * Instantiate new event.
      *
      * @param array<string, mixed> $payload
-     * @param TimeProvider         $timeProvider
+     * @param TimeProvider|null    $timeProvider
      *
-     * @return mixed|self
+     * @return static
      */
     final protected static function occurred(array $payload, ?TimeProvider $timeProvider = null)
     {
@@ -69,8 +69,6 @@ abstract class AbstractEvent implements Event, \Serializable
 
     /**
      * {@inheritdoc}
-     *
-     * @return mixed|self
      */
     public static function reconstitute(iterable $payload, \DateTimeImmutable $createdAt, array $attributes)
     {

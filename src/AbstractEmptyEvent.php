@@ -62,7 +62,7 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
     /**
      * Get event instance.
      *
-     * @return mixed|self
+     * @return static
      */
     public static function instance()
     {
@@ -72,9 +72,9 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
     /**
      * Instantiate new event.
      *
-     * @param TimeProvider $timeProvider
+     * @param TimeProvider|null $timeProvider
      *
-     * @return mixed|self
+     * @return static
      */
     final protected static function occurred(?TimeProvider $timeProvider = null)
     {
@@ -85,8 +85,6 @@ abstract class AbstractEmptyEvent implements Event, \Serializable
 
     /**
      * {@inheritdoc}
-     *
-     * @return mixed|self
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

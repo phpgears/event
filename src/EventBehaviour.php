@@ -53,7 +53,7 @@ trait EventBehaviour
      *
      * @param array<string, mixed> $metadata
      *
-     * @return mixed|self
+     * @return static
      */
     final public function withAddedMetadata(array $metadata)
     {

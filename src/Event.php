@@ -68,7 +68,7 @@ interface Event
      *
      * @param array<string, mixed> $metadata
      *
-     * @return mixed|self
+     * @return static
      */
     public function withAddedMetadata(array $metadata);
 
@@ -86,7 +86,7 @@ interface Event
      * @param \DateTimeImmutable   $createdAt
      * @param array<string, mixed> $attributes
      *
-     * @return mixed|self
+     * @return static
      */
     public static function reconstitute(iterable $payload, \DateTimeImmutable $createdAt, array $attributes);
 }
