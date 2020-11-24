@@ -28,7 +28,7 @@ class AbstractEventHandlerTest extends TestCase
     {
         $this->expectException(InvalidEventException::class);
         $this->expectExceptionMessageRegExp(
-            '/^Event handler ".+" can only handle events of: ".+\\\AbstractEventStub", ".+" given$/'
+            '/^Event handler ".+" can only handle events of: ".+\\\AbstractEventStub", ".+" given\.$/'
         );
 
         $handler = new AbstractEventHandlerStub();

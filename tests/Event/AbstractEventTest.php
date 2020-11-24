@@ -58,7 +58,7 @@ class AbstractEventTest extends TestCase
     public function testNoSerialization(): void
     {
         $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be serialized');
+        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be serialized.');
 
         \serialize(AbstractEventStub::instance([]));
     }
@@ -66,7 +66,7 @@ class AbstractEventTest extends TestCase
     public function testNoDeserialization(): void
     {
         $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be unserialized');
+        $this->expectExceptionMessage('Event "Gears\Event\Tests\Stub\AbstractEventStub" cannot be unserialized.');
 
         \unserialize('O:40:"Gears\Event\Tests\Stub\AbstractEventStub":0:{}');
     }

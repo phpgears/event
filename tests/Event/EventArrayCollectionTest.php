@@ -28,7 +28,7 @@ class EventArrayCollectionTest extends TestCase
     public function testInvalidTypeCollection(): void
     {
         $this->expectException(InvalidEventException::class);
-        $this->expectExceptionMessageRegExp('/^Event collection only accepts ".+", "string" given$/');
+        $this->expectExceptionMessageRegExp('/^Event collection only accepts ".+", "string" given\.$/');
 
         new EventArrayCollection(['event']);
     }
@@ -60,7 +60,7 @@ class EventArrayCollectionTest extends TestCase
     public function testNoSerialization(): void
     {
         $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event collection "Gears\Event\EventArrayCollection" cannot be serialized');
+        $this->expectExceptionMessage('Event collection "Gears\Event\EventArrayCollection" cannot be serialized.');
 
         \serialize(new EventArrayCollection([]));
     }
@@ -68,7 +68,7 @@ class EventArrayCollectionTest extends TestCase
     public function testNoDeserialization(): void
     {
         $this->expectException(EventException::class);
-        $this->expectExceptionMessage('Event collection "Gears\Event\EventArrayCollection" cannot be unserialized');
+        $this->expectExceptionMessage('Event collection "Gears\Event\EventArrayCollection" cannot be unserialized.');
 
         \unserialize('O:32:"Gears\Event\EventArrayCollection":0:{}');
     }

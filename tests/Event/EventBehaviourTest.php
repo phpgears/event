@@ -26,7 +26,7 @@ class EventBehaviourTest extends TestCase
     {
         $this->expectException(InvalidScalarParameterException::class);
         $this->expectExceptionMessageRegExp(
-            '/^Class ".+" can only accept scalar metadata parameters, "stdClass" given$/'
+            '/^Class ".+" can only accept scalar metadata parameters, "stdClass" given\.$/'
         );
 
         new EventBehaviourStub(['file' => new \stdClass()]);

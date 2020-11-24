@@ -5,6 +5,8 @@ parameters:
   ignoreErrors:
     - message: '/^Call to an undefined method DateTimeInterface::setTimezone\(\)\.$/'
       path: src/Time/FixedTimeProvider.php
+    - message: '/^Method Gears\\Event\\EventArrayCollection::current\(\) should return Gears\\Event\\Event but returns Gears\\Event\\Event\|false\.$/'
+      path: src/EventArrayCollection.php
     - message: '/^Unsafe usage of new static\(\)\.$/'
       paths:
         - src/AbstractEmptyEvent.php

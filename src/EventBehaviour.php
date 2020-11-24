@@ -82,7 +82,7 @@ trait EventBehaviour
             } catch (InvalidScalarParameterException $exception) {
                 throw new InvalidScalarParameterException(
                     \sprintf(
-                        'Class "%s" can only accept scalar metadata parameters, "%s" given',
+                        'Class "%s" can only accept scalar metadata parameters, "%s" given.',
                         static::class,
                         \is_object($value) ? \get_class($value) : \gettype($value)
                     ),

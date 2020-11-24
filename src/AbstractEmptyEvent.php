@@ -81,7 +81,7 @@ abstract class AbstractEmptyEvent implements Event
      */
     final public function __serialize(): array
     {
-        throw new EventException(\sprintf('Event "%s" cannot be serialized', static::class));
+        throw new EventException(\sprintf('Event "%s" cannot be serialized.', static::class));
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class AbstractEmptyEvent implements Event
      */
     final public function __unserialize(array $data): void
     {
-        throw new EventException(\sprintf('Event "%s" cannot be unserialized', static::class));
+        throw new EventException(\sprintf('Event "%s" cannot be unserialized.', static::class));
     }
 
     /**
@@ -99,12 +99,12 @@ abstract class AbstractEmptyEvent implements Event
      */
     final public function __sleep(): array
     {
-        throw new EventException(\sprintf('Event "%s" cannot be serialized', static::class));
+        throw new EventException(\sprintf('Event "%s" cannot be serialized.', static::class));
     }
 
     final public function __wakeup(): void
     {
-        throw new EventException(\sprintf('Event "%s" cannot be unserialized', static::class));
+        throw new EventException(\sprintf('Event "%s" cannot be unserialized.', static::class));
     }
 
     /**
