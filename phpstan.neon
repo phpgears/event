@@ -3,6 +3,8 @@ parameters:
   paths:
     - src
   ignoreErrors:
+    - message: '/^Method Gears\\Event\\EventArrayCollection::current\(\) should return Gears\\Event\\Event but returns Gears\\Event\\Event\|false\.$/'
+      path: src/EventArrayCollection.php
     - message: '/^Unsafe usage of new static\(\)\.$/'
       paths:
         - src/AbstractEmptyEvent.php

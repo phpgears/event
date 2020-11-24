@@ -27,7 +27,7 @@ class EventBehaviourTest extends TestCase
     {
         $this->expectException(InvalidEventParameterException::class);
         $this->expectExceptionMessageRegExp(
-            '/^Event parameter "metadata" on ".+" cannot be set$/'
+            '/^Event parameter "metadata" on ".+" cannot be set\.$/'
         );
 
         new EventBehaviourStub(['metadata' => 'value'], []);
@@ -37,7 +37,7 @@ class EventBehaviourTest extends TestCase
     {
         $this->expectException(InvalidEventParameterException::class);
         $this->expectExceptionMessageRegExp(
-            '/^Event parameter "createdAt" on ".+" cannot be set$/'
+            '/^Event parameter "createdAt" on ".+" cannot be set\.$/'
         );
 
         new EventBehaviourStub(['createdAt' => 'value'], []);
@@ -47,7 +47,7 @@ class EventBehaviourTest extends TestCase
     {
         $this->expectException(InvalidScalarParameterException::class);
         $this->expectExceptionMessageRegExp(
-            '/^Class ".+" can only accept scalar metadata parameters, "stdClass" given$/'
+            '/^Class ".+" can only accept scalar metadata parameters, "stdClass" given\.$/'
         );
 
         new EventBehaviourStub([], ['file' => new \stdClass()]);
